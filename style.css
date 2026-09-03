@@ -398,6 +398,27 @@ footer {
     color: #888;
 }
 
+/* Center the skills section vertically in the viewport and tighten spacing */
+#skills {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 5%;
+    min-height: 40vh;
+}
+
+#skills .feature-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+/* Reduce spacing for the projects section so it sits closer to skills */
+#projects {
+    padding-top: 40px;
+}
+
 .footer-content {
     display: grid;
     gap: 18px;
@@ -565,5 +586,29 @@ footer {
 .reveal.show {
   opacity: 1;
   transform: translateY(0);
+}
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 60px;
+    border-top: 1px solid rgba(168, 85, 247, 0.2);
+    opacity: 0.8;
+}
+
+footer p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    footer {
+        padding: 25px 15px;
+    }
+
+    footer p {
+        font-size: 13px;
+    }
 }
 }

@@ -12,6 +12,13 @@ const revealObserver = new IntersectionObserver(
         entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
             entry.target.classList.add("visible");
+            // If the skills section just revealed, change its header to singular 'Skill'
+            if (entry.target.id === 'skills') {
+                const label = document.querySelector('#skills .section-label');
+                const heading = document.querySelector('#skills .section-header h2');
+                if (label) label.textContent = 'Skill';
+                if (heading) heading.textContent = 'Skill';
+            }
             observerInstance.unobserve(entry.target);
         });
     },
@@ -34,4 +41,29 @@ window.addEventListener("load", () => {
             revealObserver.unobserve(target);
         }
     });
+    
 });
+// =========================
+// Contact Form
+// =========================
+
+const contactForm = document.querySelector(".contact-form");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = contactForm.querySelector('input[type="text"]').value;
+    const email = contactForm.querySelector('input[type="email"]').value;
+    const message = contactForm.querySelector("textarea").value;
+
+    if (!name || !email || !message) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    alert("Thank you! Your message has been received.");
+
+    contactForm.reset();
+    });
+}
