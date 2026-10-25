@@ -53,35 +53,85 @@ if (scrollTargets.length > 0) {
 }
 
 // =========================
-// Contact Form
+// Contact Form (Formspree)
 // =========================
 const contactForm = document.querySelector(".contact-form");
 
 if (contactForm) {
-    contactForm.addEventListener("submit", function (event) {
+    contactForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
-        const name = contactForm.querySelector('input[type="text"]').value.trim();
-        const email = contactForm.querySelector('input[type="email"]').value.trim();
-        const message = contactForm.querySelector("textarea").value.trim();
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const statusElement = document.getElementById("form-status");
+        const originalBtnText = submitBtn ? submitBtn.textContent : "Send Message";
+
+        const formData = new FormData(contactForm);
+        const name = (formData.get("name") || "").toString().trim();
+        const email = (formData.get("email") || "").toString().trim();
+        const message = (formData.get("message") || "").toString().trim();
 
         if (!name || !email || !message) {
-            alert("Please fill in all fields.");
+            if (statusElement) {
+                statusElement.textContent = "Please fill in all fields.";
+                statusElement.className = "form-status error";
+            } else {
+                alert("Please fill in all fields.");
+            }
             return;
         }
 
-        const recipient = "getasewshumie@gmail.com";
-        const subject = `Website inquiry from ${name}`;
-        const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-        const gmailComposeUrl = new URL("https://mail.google.com/mail/");
-        gmailComposeUrl.search = new URLSearchParams({
-            view: "cm",
-            fs: "1",
-            to: recipient,
-            su: subject,
-            body,
-        }).toString();
+        // Set loading state
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Sending...";
+        }
+        if (statusElement) {
+            statusElement.textContent = "Sending your message...";
+            statusElement.className = "form-status loading";
+        }
 
-        window.location.assign(gmailComposeUrl.toString());
+        try {
+            const response = await fetch(contactForm.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    Accept: "application/json",
+                },
+            });
+
+            if (response.ok) {
+                contactForm.reset();
+                if (statusElement) {
+                    statusElement.textContent = "Thank you! Your message has been sent successfully.";
+                    statusElement.className = "form-status success";
+                } else {
+                    alert("Thank you! Your message has been sent successfully.");
+                }
+            } else {
+                const data = await response.json().catch(() => null);
+                let errorMessage = "Oops! There was a problem submitting your form.";
+                if (data && data.errors && data.errors.length > 0) {
+                    errorMessage = data.errors.map(err => err.message).join(", ");
+                }
+                if (statusElement) {
+                    statusElement.textContent = errorMessage;
+                    statusElement.className = "form-status error";
+                } else {
+                    alert(errorMessage);
+                }
+            }
+        } catch (error) {
+            if (statusElement) {
+                statusElement.textContent = "Network error. Please check your connection and try again.";
+                statusElement.className = "form-status error";
+            } else {
+                alert("Network error. Please check your connection and try again.");
+            }
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            }
+        }
     });
 }

@@ -218,21 +218,24 @@
             <span>Have an idea? Let's make it happen.</span>
         </div>
 
-        <form class="contact-form">
+        <form class="contact-form" action="https://formspree.io/f/xdeeaavo" method="POST">
 
             <input
                 type="text"
+                name="name"
                 placeholder="Your Name"
                 required
             >
 
             <input
                 type="email"
+                name="email"
                 placeholder="Your Email"
                 required
             >
 
             <textarea
+                name="message"
                 rows="6"
                 placeholder="Your Message"
                 required
@@ -241,6 +244,8 @@
             <button type="submit" class="btn primary-btn">
                 Send Message
             </button>
+
+            <div class="form-status" id="form-status" aria-live="polite"></div>
 
         </form>
 
