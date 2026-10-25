@@ -1,4 +1,4 @@
-[9/3/2026 1:08 AM] T-ba*: <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,6 @@
     <!-- Navigation -->
     <header>
         <nav class="navbar">
-          <button class="menu-toggle" id="menuToggle">☰</button>
             <a href="#" class="logo">NOVA<span>.</span></a>
 
             <ul class="nav-links">
@@ -25,7 +24,7 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
 
-            <button class="menu-toggle" id="menu-toggle">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
                 ☰
             </button>
 
@@ -160,7 +159,8 @@
 
     <!-- Pricing Section -->
     <section id="pricing" class="pricing">
- <div class="section-title">
+
+        <div class="section-title">
             <p>PRICING</p>
             <h2>Simple pricing</h2>
             <span>Choose the plan that works for you.</span>
@@ -206,7 +206,9 @@
 
         </div>
 
-    
+    </section>
+
+
     <!-- Contact Section -->
     <section id="contact" class="contact">
 
@@ -214,12 +216,7 @@
             <p>CONTACT</p>
             <h2>Let's work together</h2>
             <span>Have an idea? Let's make it happen.</span>
-            <div class="social-links">
-            <a href="https://github.com/gshumie" target="_blank">
-      GitHub
-    </a>
-     </div>
-</footer>
+        </div>
 
         <form class="contact-form">
 
@@ -231,7 +228,7 @@
 
             <input
                 type="email"
-                placeholder="getasewshumie@gmail.com"
+                placeholder="Your Email"
                 required
             >
 
@@ -262,7 +259,7 @@
             </p>
 
             <div class="social-links">
-                <a href="#">GitHub</a>
+                <a href="https://github.com/gshumie" target="_blank" rel="noopener noreferrer">GitHub</a>
                 <a href="#">LinkedIn</a>
                 <a href="#">Twitter</a>
             </div>
